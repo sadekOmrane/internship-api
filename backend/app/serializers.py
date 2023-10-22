@@ -37,11 +37,8 @@ class SkillSerializer(serializers.HyperlinkedModelSerializer):
     
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
+        instance.sectors.set(validated_data.get('sector_ids', instance.sectors))
         instance.save()
-        if('sector_ids' in validated_data):
-            sectors_data = validated_data.pop('sector_ids')
-            sectors = instance.sectors
-            sectors.set(sectors_data)
         return instance
 
 
@@ -68,17 +65,10 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
         return profile
 
     def update(self, instance, validated_data):
-        if'user_id' in validated_data:
-            user_data = validated_data.pop('user_id')
-            user = instance.user
-            user.set(user_data)
         instance.user = validated_data.get('user_id', instance.user)
         instance.title = validated_data.get('title', instance.title)
+        instance.skills.set(validated_data.get('skill_ids', instance.skills))
         instance.save()
-        if('skill_ids' in validated_data):
-            skills_data = validated_data.pop('skill_ids')
-            skills = instance.skills
-            skills.set(skills_data)
         return instance
 
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
