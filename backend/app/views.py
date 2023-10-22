@@ -16,8 +16,8 @@ class SectorViewSets(viewsets.ModelViewSet):
 
 
 class SkillViewSets(viewsets.ModelViewSet):
-    #authentication_classes = [JWTAuthentication]
-    #permission_classes = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer    
 
