@@ -9,26 +9,36 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework_simplejwt.authentication import JWTAuthentication
 # Create your views here.
 class SectorViewSets(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Sector.objects.all()
     serializer_class = SectorSerializer
 
 
 class SkillViewSets(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer    
 
 
 class LocationViewSets(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
 
 
 class CompanyViewSets(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
 
 class JobViewSets(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Job.objects.all()
     serializer_class = JobSerializer
 
@@ -40,10 +50,14 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class GroupViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer

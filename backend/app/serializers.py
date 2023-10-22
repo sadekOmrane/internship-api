@@ -68,8 +68,10 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
         return profile
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user_id')
-        user = instance.user
+        if'user_id' in validated_data:
+            user_data = validated_data.pop('user_id')
+            user = instance.user
+            user.set(user_data)
         instance.user = validated_data.get('user_id', instance.user)
         instance.title = validated_data.get('title', instance.title)
         instance.save()
@@ -77,7 +79,6 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
             skills_data = validated_data.pop('skill_ids')
             skills = instance.skills
             skills.set(skills_data)
-            
         return instance
 
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
@@ -98,6 +99,15 @@ class CompanySerializer(serializers.HyperlinkedModelSerializer):
         company = Company.objects.create(owner = owner_data, location = location_data, **validated_data)
         company.sectors.set(sectors_data)
         return company
+    
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('name', instance.description)
+        instance.owner = validated_data.get('owner_id', instance.owner)
+        instance.location = validated_data.get('location_id', instance.location)
+        instance.sectors.set(validated_data.get('sector_ids', instance.sectors))
+        instance.save()
+        return instance
 
 
 class JobSerializer(serializers.HyperlinkedModelSerializer):
@@ -120,6 +130,15 @@ class JobSerializer(serializers.HyperlinkedModelSerializer):
         job.candidates.set(candidates_data)
         job.skills.set(skills_data)
         return job
-
+    
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.description = validated_data.get('description', instance.description)
+        instance.status = validated_data.get('status', instance.status)
+        instance.candidates.set(validated_data.get('candidate_ids', instance.candidates))
+        instance.company = validated_data.get('company_id', instance.company)
+        instance.skills.set(validated_data.get('skill_ids', instance.skills))
+        instance.save()
+        return instance
 
 
