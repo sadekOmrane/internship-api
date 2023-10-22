@@ -5,7 +5,8 @@ from .serializers import SectorSerializer, SkillSerializer, LocationSerializer, 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
-
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 # Create your views here.
 class SectorViewSets(viewsets.ModelViewSet):
     queryset = Sector.objects.all()
@@ -32,6 +33,8 @@ class JobViewSets(viewsets.ModelViewSet):
     serializer_class = JobSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
